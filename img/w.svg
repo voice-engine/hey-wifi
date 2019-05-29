@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="256"
+   height="64"
+   id="svg5869"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   viewBox="0 0 256 64"
+   sodipodi:docname="wave.svg">
+  <defs
+     id="defs5871" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.8"
+     inkscape:cx="141.78916"
+     inkscape:cy="21.66351"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1054"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5883"
+       empspacing="8" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5874">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,4)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path5818"
+       title="cos(x)*sin(x/8.)"
+       d="m 47.999999,29.203237 c 6.666667,-4.188769 13.333333,8.355493 20,12.24587 6.666667,3.890377 13.333332,-31.873578 19.999992,-34.873287 6.66667,-2.9997103 13.333329,50.539198 19.999999,52.191562 6.66667,1.652364 13.33333,-61.5106853 20,-61.5641456 C 134.66666,-2.8502236 141.33332,60.320964 148,58.767382 154.66667,57.2138 161.33333,3.6517147 168,6.57582 c 6.66667,2.924105 13.33333,38.722747 20,34.873287 6.66667,-3.84946 13.33333,-16.434639 20,-12.24587"
+       style="opacity:1;fill:none;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0" />
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css">
+    <style>
+        body {
+            background: #4CAF50;
+            text-align: center;
+        }
+
+        input {
+            text-align: center;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 4px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+        }
+    </style>
+
+    <script type="text/javascript" src="js/quiet.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+
+<body>
+    <div class="content">
+        <h1><img src="img/w.svg" /></h1>
+        <p>Send WiFi settings through sound wave</p>
+        <form class="pure-form pure-form-stacked pure-u-1-2" onsubmit="return false">
+
+            <input class="pure-u-1-1" id="ssid" type="text" placeholder="SSID">
+            <input class="pure-u-1-1" id="password" type="text" placeholder="Password">
+            <button id="send" type="submit" class="pure-u-1-1 pure-button pure-button-primary">SEND</button>
+        </form>
+    </div>
+    <div class="footer">
+        <a href="https://github.com/voice-engine" class="footer-link">
+            <img height="24" width="24" src="img/github.svg" />
+        </a><br>&copy; 2019 VOICEN</div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141015371-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-141015371-1');
+    </script>
+
+</body>
+
+</html>
