@@ -39,9 +39,9 @@ var TextTransmitter = (function () {
         Quiet.addReadyCallback(onQuietReady, onQuietFail);
 
         Quiet.init({
-            profilesPath: "/quiet-profiles.json",
-            memoryInitializerPath: "/js/quiet-emscripten.js.mem",
-            emscriptenPath: "/js/quiet-emscripten.js"
+            profilesPath: "quiet-profiles.json",
+            memoryInitializerPath: "js/quiet-emscripten.js.mem",
+            emscriptenPath: "js/quiet-emscripten.js"
         });
     };
 
