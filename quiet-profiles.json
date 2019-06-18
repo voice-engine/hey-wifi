@@ -271,7 +271,7 @@
     "mod_scheme": "bpsk",
     "checksum_scheme": "crc16",
     "inner_fec_scheme": "none",
-    "outer_fec_scheme": "v39",
+    "outer_fec_scheme": "v27",
     "frame_length": 64,
     "modulation": {
       "center_frequency": 19000,
@@ -295,7 +295,7 @@
     "header": {
       "checksum_scheme": "crc16",
       "inner_fec_scheme": "none",
-      "outer_fec_scheme": "v39",
+      "outer_fec_scheme": "v27",
       "mod_scheme": "bpsk"
     }
   }
