@@ -77,7 +77,13 @@ def main():
         print('SSID: {}\nPassword: {}'.format(ssid, password))
 
         if os.system('which nmcli >/dev/null') == 0:
-            cmd = 'sudo nmcli device wifi connect {} password {}'.format(ssid, password)
+            cmd = 'nmcli device wifi rescan'
+            os.system(cmd)
+            
+            cmd = 'nmcli connection delete "{}"'.format(ssid)
+            os.system(cmd)
+            
+            cmd = 'nmcli device wifi connect {} password {}'.format(ssid, password)
             if os.system(cmd) == 0:
                 print('Wi-Fi is connected')
                 decoder.done = True
