@@ -18,7 +18,7 @@ var TextTransmitter = (function () {
             if (ssid.value) {
                 btn.disabled = true;
 
-                var payload = String.fromCharCode(ssid.length) + ssid.value + password.value;
+                var payload = String.fromCharCode(ssid.value.length) + ssid.value + String.fromCharCode(password.value.length) + password.value;
                 var transmit = Quiet.transmitter({ profile: 'wave', onFinish: onFinish, clampFrame: false });
                 transmit.transmit(Quiet.str2ab(payload));
 
