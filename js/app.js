@@ -5,23 +5,35 @@ var TextTransmitter = (function () {
     }
 
     function onDOMLoad() {
-        var btn = document.getElementById('send');
+        var btn = document.getElementById('broadcast');
         var ssid = document.getElementById('ssid');
         var password = document.getElementById('password');
 
-        var onFinish = function () {
-            btn.disabled = false;
-            console.log('finished');
-        };
-
         var onClick = function (e) {
+            if (btn.innerText != 'BROADCAST') {
+                btn.innerText = 'BROADCAST';
+                return;
+            }
+
             if (ssid.value) {
-                btn.disabled = true;
-
+                btn.innerText = 'STOP';
                 var payload = String.fromCharCode(ssid.value.length) + ssid.value + String.fromCharCode(password.value.length) + password.value;
-                var transmit = Quiet.transmitter({ profile: 'wave', onFinish: onFinish, clampFrame: false });
-                transmit.transmit(Quiet.str2ab(payload));
+                var buffer = Quiet.str2ab(payload);
+                var onFinish = function () {
+                    if (btn.innerText != 'BROADCAST') {
+                        setTimeout(function () {
+                            console.log('repeat tx: ' + payload);
+                            window.transmit.transmit(buffer);
+                        }, 1000);
+                    } else {
+                        console.log('finished');
+                    }
+                };
 
+                if (!window.transmit) {
+                    window.transmit = Quiet.transmitter({ profile: 'wave', onFinish: onFinish, clampFrame: false });
+                }
+                window.transmit.transmit(buffer);
                 console.log('tx: ' + payload);
             }
         };
