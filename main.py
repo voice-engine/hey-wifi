@@ -84,7 +84,7 @@ def get_ip_info():
 
 def encrypt(key, data):
     m = hashlib.md5()
-    m.update(data)
+    m.update(key)
     counter = random.SystemRandom().randint(0, 1 << 15)
     aes = AES.new(m.digest(), AES.MODE_CTR, counter=Counter.new(128, initial_value=counter))
     encrypted = aes.encrypt(data)
@@ -130,7 +130,7 @@ def main():
         if os.system('which mosquitto_pub >/dev/null') != 0:
             print('mosquitto_pub is not found')
 
-        cmd = "mosquitto_pub -h iot.eclipse.org -t '/voicen/channel' -m '{}'".format(json.dumps(message))
+        cmd = "mosquitto_pub -h iot.eclipse.org -q 2 -t '/voicen/channel' -m '{}'".format(json.dumps(message))
         print(cmd)
         if os.system(cmd) != 0:
             print('Failed to send message to the web page')
