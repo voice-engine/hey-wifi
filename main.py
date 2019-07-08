@@ -130,7 +130,8 @@ def main():
         if os.system('which mosquitto_pub >/dev/null') != 0:
             print('mosquitto_pub is not found')
 
-        cmd = "mosquitto_pub -h iot.eclipse.org -q 2 -t '/voicen/channel' -m '{}'".format(json.dumps(message))
+        # cmd = "mosquitto_pub -h iot.eclipse.org -q 2 -t '/voicen/channel' -m '{}'".format(json.dumps(message))
+        cmd = "mosquitto_pub -h test.mosquitto.org -q 2 -t '/voicen/channel' -m '{}'".format(json.dumps(message))
         print(cmd)
         if os.system(cmd) != 0:
             print('Failed to send message to the web page')
