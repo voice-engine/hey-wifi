@@ -8,10 +8,26 @@
         body {
             background: #4CAF50;
             text-align: center;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            flex-direction: flex-start;
         }
 
         input {
             text-align: center;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        .main {
+            width: 100%;
+            display: block;
+            flex-grow: 1;
         }
 
         .content {
@@ -19,12 +35,16 @@
             margin: auto;
         }
 
+        .table-responsive table {
+            margin-top: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
         .footer {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 4px;
+            display: block;
+            width: 100%;
+            margin: 0;
         }
 
         .footer-link {
@@ -32,21 +52,48 @@
         }
     </style>
 
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aes-js/3.1.2/index.min.js"></script>
     <script type="text/javascript" src="js/quiet.min.js"></script>
+    <script type="text/javascript" src="js/md5.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
 
 <body>
-    <div class="content">
-        <h1><img src="img/w.svg" /></h1>
-        <p>Send WiFi settings through sound wave</p>
-        <form class="pure-form pure-form-stacked pure-u-1-2" onsubmit="return false">
+    <div class="main">
+        <div class="content">
+            <h1><img src="img/w.svg" /></h1>
+            <p>Send WiFi settings through sound wave</p>
+            <form class="pure-form pure-form-stacked pure-u-1-2" onsubmit="return false">
 
-            <input class="pure-u-1-1" id="ssid" type="text" placeholder="SSID">
-            <input class="pure-u-1-1" id="password" type="text" placeholder="Password">
-            <button id="broadcast" type="submit" class="pure-u-1-1 pure-button pure-button-primary">BROADCAST</button>
-        </form>
+                <input class="pure-u-1-1" id="ssid" type="text" placeholder="SSID">
+                <input class="pure-u-1-1" id="password" type="text" placeholder="Password">
+                <button id="broadcast" type="submit"
+                    class="pure-u-1-1 pure-button pure-button-primary">BROADCAST</button>
+
+            </form>
+
+            <div class="table-responsive pure-u-1-2">
+                <table class="pure-table pure-table-bordered" id="devicesTable" hidden>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Devices</th>
+                        </tr>
+                    </thead>
+                    <tbody id="devices">
+                        <tr>
+                            <td>1</td>
+                            <td>192.168.10.100</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
+
     <div class="footer">
         <a href="https://github.com/voice-engine" class="footer-link">
             <img height="24" width="24" src="img/github.svg" />
