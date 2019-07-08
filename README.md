@@ -7,9 +7,10 @@ The project is based on [quiet](https://github.com/quiet)
 + quiet.py
 + numpy
 + voice-engine
++ pycryptodome
 
 ```
-sudo apt install python3-numpy
+sudo apt install python3-numpy python3-pycryptodome
 pip3 install voice-engine
 pip3 install --no-deps quiet.py    # for ARM platform
 ```
