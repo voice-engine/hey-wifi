@@ -1,6 +1,9 @@
-Send WiFi settings through sound wave
-====================================
+wave
+====
 
+![](https://voice-engine.github.io/wave/img/scenario.svg)
+
+Send WiFi settings through sound wave.
 The project is based on [quiet](https://github.com/quiet)
 
 ### Requirements
