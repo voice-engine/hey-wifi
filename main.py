@@ -1,4 +1,5 @@
-
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -17,6 +18,9 @@ import quiet
 from voice_engine.source import Source
 
 
+PROFILES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'quiet-profiles.json')
+
+
 class Decoder(object):
     def __init__(self, channels=1, select=0, bits_per_sample=16):
         self.channels = channels
@@ -29,7 +33,7 @@ class Decoder(object):
         elif bits_per_sample == 32:
             self.dtype = np.int32
         else:
-            raise ValueError('bits per sample not supported')
+            raise ValueError('{} bits per sample is not supported'.format(bits_per_sample))
 
     def start(self):
         self.done = False
@@ -41,7 +45,7 @@ class Decoder(object):
         self.queue.put(data)
 
     def run(self):
-        decoder = quiet.Decoder(sample_rate=48000, profile_name='wave', profiles='quiet-profiles.json')
+        decoder = quiet.Decoder(sample_rate=48000, profile_name='wave', profiles=PROFILES)
 
         while not self.done:
             audio = self.queue.get()
@@ -92,10 +96,6 @@ def main():
         else:
             print('to do')
 
-
-    # def int_handler(sig, frame):
-    #     listener.stop()
-    #signal.signal(signal.SIGINT, int_handler)
 
     decoder.on_data = on_data
 
