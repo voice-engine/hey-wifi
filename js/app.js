@@ -100,9 +100,10 @@
             }
         }
 
-        // var clientId = Math.random().toString().substring(2);
-        // console.log(clientId);
-        var client = new Paho.Client("iot.eclipse.org", Number(443), "/wss");
+        var clientId = Math.random().toString().substring(2);
+        console.log(clientId);
+        var client = new Paho.Client("test.mosquitto.org", Number(8081), "/wss", clientId);
+        // var client = new Paho.Client("iot.eclipse.org", Number(443), "/wss");
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
         client.connect({ onSuccess: onConnect, useSSL: true });
