@@ -10,10 +10,17 @@ if sys.version_info[0] < 3:
 else:
     import queue
 
+import base64
+import hashlib
+import json
 import threading
 import signal
+import subprocess
+import random
 
 import numpy as np
+from Cryptodome.Cipher import AES
+from Cryptodome.Util import Counter
 import quiet
 from voice_engine.source import Source
 
@@ -68,10 +75,25 @@ class Decoder(object):
         print(data)
 
 
+def get_ip_info():
+    ip_info = subprocess.check_output(r"ip a | sed -ne '/127.0.0.1/!{s/^[ \t]*inet[ \t]*\([0-9.]\+\)\/.*$/\1/p}'", shell=True)
+    ip_info = ip_info.strip()
+    # return ip_info.split('\n')
+    return ip_info
+
+
+def encrypt(key, data):
+    m = hashlib.md5()
+    m.update(data)
+    counter = random.SystemRandom().randint(0, 1 << 15)
+    aes = AES.new(m.digest(), AES.MODE_CTR, counter=Counter.new(128, initial_value=counter))
+    encrypted = aes.encrypt(data)
+    return { 'id': counter, 'data': base64.b64encode(encrypted).decode() }
+
+
 def main():
     src = Source(rate=48000, channels=4, device_name='ac108', bits_per_sample=32)
     decoder = Decoder(channels=src.channels, select=0, bits_per_sample=32)
-
 
     def on_data(data):
         ssid_length = data[0]
@@ -80,21 +102,41 @@ def main():
         password = data[ssid_length+2:ssid_length+password_length+2].tostring().decode('utf-8')
         print('SSID: {}\nPassword: {}'.format(ssid, password))
 
-        if os.system('which nmcli >/dev/null') == 0:
-            cmd = 'nmcli device wifi rescan'
-            os.system(cmd)
-            
-            cmd = 'nmcli connection delete "{}"'.format(ssid)
-            os.system(cmd)
-            
-            cmd = 'nmcli device wifi connect {} password {}'.format(ssid, password)
-            if os.system(cmd) == 0:
-                print('Wi-Fi is connected')
-                decoder.done = True
-            else:
-                print('Failed')
-        else:
-            print('to do')
+        if os.system('which nmcli >/dev/null') != 0:
+            print('nmcli is not found')
+            return
+
+        cmd = 'nmcli device wifi rescan'
+        os.system(cmd)
+        
+        cmd = 'nmcli connection delete "{}"'.format(ssid)
+        os.system(cmd)
+        
+        cmd = 'nmcli device wifi connect {} password {}'.format(ssid, password)
+        if os.system(cmd) != 0:
+            print('Failed to connect the Wi-Fi network')
+            return
+
+        print('Wi-Fi is connected')
+        ip_info = get_ip_info()
+        if not ip_info:
+            print('Not find any IP address')
+            return
+
+        print(ip_info)
+        decoder.done = True
+
+        message = encrypt(data, ip_info)
+        if os.system('which mosquitto_pub >/dev/null') != 0:
+            print('mosquitto_pub is not found')
+
+        cmd = "mosquitto_pub -h iot.eclipse.org -t '/voicen/channel' -m '{}'".format(json.dumps(message))
+        print(cmd)
+        if os.system(cmd) != 0:
+            print('Failed to send message to the web page')
+            return
+
+        print('Done')
 
 
     decoder.on_data = on_data
