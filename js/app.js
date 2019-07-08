@@ -100,7 +100,7 @@
             }
         }
 
-        var client = new Paho.Client("iot.eclipse.org", Number(443), "/wss");
+        var client = new Paho.Client("iot.eclipse.org", Number(443), "/wss", Math.random().toString().substring(2));
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
         client.connect({ onSuccess: onConnect, useSSL: true });
@@ -137,6 +137,7 @@
                 var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(json.id));
                 var decrypted = aesCtr.decrypt(toBytes(atob(json.data)));
                 var value = toString(decrypted);
+                console.log(value);
                 var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
                 if (value.match(ipformat)) {
                     devices.push(value);
