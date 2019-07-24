@@ -1,5 +1,5 @@
-wave
-====
+Hey, WiFi
+=========
 
 ![](https://voice-engine.github.io/wave/img/scenario.svg)
 
