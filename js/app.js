@@ -10,6 +10,9 @@
         var passwordInput = document.getElementById('password');
         var devicesTable = document.getElementById('devicesTable');
         var devicesElement = document.getElementById('devices');
+        var ringElement = document.getElementById('ring');
+        var rippleElement = document.getElementById('ripple');
+        var logoImage = document.getElementById('logo');
         var devices = [];
         var key = null;
 
@@ -29,6 +32,8 @@
         var onClick = function (e) {
             if (btn.innerText != 'BROADCAST') {
                 btn.innerText = 'BROADCAST';
+                rippleElement.hidden = true;
+                logoImage.hidden = false;
                 return;
             }
 
@@ -37,6 +42,8 @@
 
             if (ssid) {
                 btn.innerText = 'STOP';
+                logoImage.hidden = true;
+                rippleElement.hidden = false;
                 devicesTable.hidden = true;
                 devices = []
 
@@ -75,6 +82,8 @@
 
         var onQuietReady = function () {
             btn.disabled = false;
+            ringElement.hidden = true;
+            logoImage.hidden = false;
         };
         var onQuietFail = function (reason) {
             console.log("quiet failed to initialize: " + reason);
