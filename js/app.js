@@ -101,7 +101,7 @@
             if (devices) {
                 var html = '';
                 for (var i = 0; i < devices.length; i++) {
-                    html = html + `<tr><td>${i}</td><td>${devices[i]}</td></tr>`;
+                    html = html + `<tr><td>${i}</td><td><a href="http://${devices[i]}">${devices[i]}</a></td></tr>`;
 
                 }
                 devicesElement.innerHTML = html;
@@ -111,7 +111,8 @@
 
         var clientId = Math.random().toString().substring(2);
         console.log(clientId);
-        var client = new Paho.Client("test.mosquitto.org", Number(8081), "/wss", clientId);
+        var client = new Paho.Client("v.tangram7.net", Number(443), "/ws", clientId);
+        // var client = new Paho.Client("test.mosquitto.org", Number(8081), "/wss", clientId);
         // var client = new Paho.Client("iot.eclipse.org", Number(443), "/wss");
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
