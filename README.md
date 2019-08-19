@@ -1,7 +1,7 @@
 Hey, WiFi
 =========
 
-![](https://voice-engine.github.io/wave/img/scenario.svg)
+![](https://voice-engine.github.io/hey-wifi/img/scenario.svg)
 
 Send WiFi settings through sound wave.
 The project is based on [quiet](https://github.com/quiet)
@@ -22,4 +22,4 @@ pip3 install --no-deps quiet.py    # for ARM platform
 
 ### Demo
 1. run `main.py` on your device
-2. go to https://voice-engine.github.io/wave/ using a computer or a phone
+2. go to https://voice-engine.github.io/hey-wifi/ using a computer or a phone
