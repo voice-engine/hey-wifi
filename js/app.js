@@ -101,7 +101,7 @@
             if (devices) {
                 var html = '';
                 for (var i = 0; i < devices.length; i++) {
-                    html = html + `<tr><td>${i}</td><td><a href="http://${devices[i]}">${devices[i]}</a></td></tr>`;
+                    html = html + `<tr><td>${i}</td><td><a target="_blank" href="http://${devices[i]}">${devices[i]}</a></td></tr>`;
 
                 }
                 devicesElement.innerHTML = html;
