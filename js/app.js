@@ -180,7 +180,7 @@
         var client = new Paho.Client("v.tangram7.net", Number(443), "/ws", clientId);
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
-        client.connect({ onSuccess: onConnect, useSSL: true });
+        client.connect({ onSuccess: onConnect, useSSL: true, keepAliveInterval: 50 });
         function onConnect() {
             console.log("onConnect");
             client.subscribe("/voicen/hey_wifi");
@@ -223,10 +223,6 @@
                     showDevices(devices);
                 }
             });
-
-
-
-
         }
     };
 
