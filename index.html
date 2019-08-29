@@ -3,8 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
-        integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/pure-min.css">
     <style>
         body {
             background: #4CAF50;
@@ -135,11 +134,8 @@
         }
     </style>
 
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aes-js/3.1.2/index.min.js"></script>
+    <script type="text/javascript" src="js/paho-mqtt.min.js"></script>
     <script type="text/javascript" src="js/quiet.min.js"></script>
-    <script type="text/javascript" src="js/md5.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
 
@@ -164,7 +160,7 @@
             <form class="pure-form pure-form-stacked pure-u-1-2" onsubmit="return false">
 
                 <input class="pure-u-1-1" id="ssid" type="text" placeholder="SSID">
-                <input class="pure-u-1-1" id="password" type="text" placeholder="Password">
+                <input class="pure-u-1-1" id="password" autocomplete="off" type="text" placeholder="Password">
                 <button id="broadcast" type="submit"
                     class="pure-u-1-1 pure-button pure-button-primary">BROADCAST</button>
 
