@@ -191,7 +191,7 @@
             if (responseObject.errorCode !== 0) {
                 console.log("onConnectionLost:" + responseObject.errorMessage);
                 setTimeout(function () {
-                    client.connect({ onSuccess: onConnect, useSSL: true });
+                    client.connect({ onSuccess: onConnect, useSSL: true, keepAliveInterval: 50 });
                 }, 1000);
             }
         }
