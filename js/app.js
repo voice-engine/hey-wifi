@@ -14,9 +14,9 @@
         var rippleElement = document.getElementById('ripple');
         var logoImage = document.getElementById('logo');
         var devices = [];
-        var nonce = 0;
         var payload = null;
         var encoder = new TextEncoder();
+        var channel = Math.floor(Math.random() * (1 << 16));
 
         function str2array(str) {
             var buf = new Uint8Array(str.length);
@@ -30,12 +30,9 @@
             return String.fromCharCode.apply(null, bytes);
         }
 
-        async function adjustKey(key) {
-            var k = new Uint8Array(key);
-            k = k.reverse().slice(0, 16);
-            var rawKey = new Uint8Array(16);
-            rawKey.set(k, 0);
-
+        async function fixKey(key) {
+            const hash = await crypto.subtle.digest('SHA-256', key);
+            var rawKey = new Uint8Array(hash).slice(0, 16);
             console.log(rawKey);
 
             return await crypto.subtle.importKey(
@@ -56,11 +53,11 @@
             return counter;
         }
 
-        async function decrypt(nonce, key, b64str) {
-            var counter = getCounter(nonce);
+        async function decrypt(n, key, b64str) {
+            var counter = getCounter(n);
             var array = str2array(atob(b64str));
 
-            var k = await adjustKey(key);
+            var k = await fixKey(key);
             var decrypted = await window.crypto.subtle.decrypt(
                 {
                     name: "AES-CTR",
@@ -74,11 +71,11 @@
             return array2str(new Uint8Array(decrypted));
         }
 
-        async function encrypt(nonce, key, str) {
-            var counter = getCounter(nonce)
+        async function encrypt(n, key, str) {
+            var counter = getCounter(n)
             var array = str2array(str);
 
-            var k = await adjustKey(key);
+            var k = await fixKey(key);
             var encrypetd = await window.crypto.subtle.encrypt(
                 {
                     name: "AES-CTR",
@@ -110,16 +107,13 @@
                 devicesTable.hidden = true;
                 devices = []
 
-                nonce = Math.floor(Math.random() * (1 << 16));
-                console.log(nonce)
-
                 payload = new Uint8Array(1 + ssid.length + 1 + password.length + 2);
                 payload[0] = ssid.length;
                 payload.set(ssid, 1);
                 payload[1 + ssid.length] = password.length;
                 payload.set(password, 1 + ssid.length + 1);
-                payload[1 + ssid.length + 1 + password.length] = nonce & 0xFF;
-                payload[1 + ssid.length + 1 + password.length + 1] = nonce >> 8;
+                payload[1 + ssid.length + 1 + password.length] = channel & 0xFF;
+                payload[1 + ssid.length + 1 + password.length + 1] = channel >> 8;
 
                 console.log('tx: ', array2str(payload), payload);
 
@@ -183,14 +177,13 @@
         client.connect({ onSuccess: onConnect, useSSL: true, keepAliveInterval: 50 });
         function onConnect() {
             console.log("onConnect");
-            client.subscribe("/voicen/hey_wifi");
-            // nonce = Math.floor(Math.random() * 10000);
+            client.subscribe(`/voicen/hey_wifi/${channel}`);
             // payload = str2array('xyz');
-            // var data = JSON.stringify({ id: nonce, data: '10.10.10.10' });
-            // encrypt(nonce, payload, data).then(encrypted => {
+            // var data = JSON.stringify({ id: channel, data: '10.10.10.10' });
+            // encrypt(channel, payload, data).then(encrypted => {
             //     console.log(encrypted, data);
             //     var message = new Paho.Message(encrypted);
-            //     message.destinationName = "/voicen/hey_wifi";
+            //     message.destinationName = `/voicen/hey_wifi/${channel}`;
             //     client.send(message);
             // });
         }
@@ -208,7 +201,7 @@
                 return;
             }
 
-            decrypt(nonce, payload, message.payloadString).then(decrypted => {
+            decrypt(channel, payload, message.payloadString).then(decrypted => {
                 console.log(decrypted);
                 try {
                     var data = JSON.parse(decrypted);
@@ -219,8 +212,10 @@
                 }
                 var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
                 if (value.match(ipformat)) {
-                    devices.push(value);
-                    showDevices(devices);
+                    if (devices.indexOf(value) < 0) {
+                        devices.push(value);
+                        showDevices(devices);
+                    }
                 }
             });
         }
