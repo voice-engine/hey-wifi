@@ -1,6 +1,6 @@
 (function () {
-    var host = "voice-engine.github.io";
-    if ((host == window.location.host) && (window.location.protocol != "https:")) {
+    var hostname = ["127.0.0.1", "localhost"];
+    if ((window.location.protocol != "https:") && (hostname.indexOf(window.location.host) < 0)) {
         window.location.protocol = "https";
     }
 
@@ -171,7 +171,7 @@
 
         var clientId = Math.random().toString().substring(2);
         console.log(clientId);
-        var client = new Paho.Client("v.tangram7.net", Number(443), "/ws", clientId);
+        var client = new Paho.Client("q.voicen.io", Number(443), "/ws", clientId);
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;
         client.connect({ onSuccess: onConnect, useSSL: true, keepAliveInterval: 50 });
