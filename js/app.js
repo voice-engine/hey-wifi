@@ -1,6 +1,6 @@
 (function () {
     var hostname = ["127.0.0.1", "localhost"];
-    if ((window.location.protocol != "https:") && (hostname.indexOf(window.location.host) < 0)) {
+    if ((window.location.protocol != "https:") && (hostname.indexOf(window.location.hostname) < 0)) {
         window.location.protocol = "https";
     }
 
