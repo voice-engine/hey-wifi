@@ -4,6 +4,21 @@
         window.location.protocol = "https";
     }
 
+    if (!window.TextEncoder) {
+        window.TextEncoder = function TextEncoder() {};
+        window.TextEncoder.prototype.encode = function(s) {
+            var escstr = encodeURIComponent(s);
+            var binstr = escstr.replace(/%([0-9A-F]{2})/g, function(_match, p1) {
+                return String.fromCharCode('0x' + p1);
+            });
+            var ua = new Uint8Array(binstr.length);
+            Array.prototype.forEach.call(binstr, function (ch, i) {
+                ua[i] = ch.charCodeAt(0);
+            });
+            return ua;
+        }
+    }
+
     function onDOMLoad() {
         var btn = document.getElementById('broadcast');
         var ssidInput = document.getElementById('ssid');
@@ -89,7 +104,7 @@
             return btoa(array2str(new Uint8Array(encrypetd)));
         }
 
-        var onClick = function (e) {
+        var onClick = function (_e) {
             if (btn.innerText != 'BROADCAST') {
                 btn.innerText = 'BROADCAST';
                 rippleElement.hidden = true;
