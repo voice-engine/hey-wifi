@@ -6,6 +6,10 @@ Hey, WiFi
 Send WiFi settings through sound wave.
 The project is based on [quiet](https://github.com/quiet)
 
+### Supported Hardware
++ [VOICEN Linear 4 Mic Array Kit](https://www.makerfabs.com/voicen-linear-4-mic-array-kit.html)
++ Raspberry Pi (with NetworkManager utils)
+
 ### Requirements
 + quiet.py
 + numpy
